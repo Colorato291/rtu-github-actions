@@ -15,10 +15,9 @@ jobs:
       run:
         shell: cmd # As self-hosted machine is Windows, to bypass security restrictions for PS, cmd is used
     steps:
-      - uses: actions/checkout@v4
       - name: Clone the repository
         run: |
-          git clone https://github.com/mtararujs/python-greetings python-greetings
+          git clone https://github.com/mtararujs/python-greetings
 
       - name: List directory contents
         run: dir python-greetings
@@ -37,9 +36,7 @@ jobs:
         shell: cmd
     needs: install-pip-deps
     steps:
-      - name: Checkout main repository
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Run tests on Dev environment
         run: |
           echo "Deploying to Development"
@@ -53,10 +50,20 @@ jobs:
         shell: cmd
     needs: deploy-to-dev
     steps:
-      - uses: actions/checkout@v4
+      - name: Clone the test repository
+        run: |
+          git clone https://github.com/mtararujs/course-js-api-framework
+
+      - name: Install dependencies
+        working-directory: course-js-api-framework
+        run: |
+          echo "Installing required dependencies"
+          npm install
+
       - name: Run tests on Development environment
         run: |
           echo "Running tests on Development"
+          npm run greetings greetings_dev
           
   deploy-to-staging:
     runs-on: self-hosted
@@ -69,6 +76,8 @@ jobs:
       - name: Deploy to Staging environment
         run: |
           echo "Deploying to Staging"
+          pm2 delete greetings-app-staging & set "errorlevel=0"
+          pm2 start app.py --name greetings-app-staging --port 7002
 
   tests-on-staging:
     runs-on: self-hosted
