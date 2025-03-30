@@ -18,9 +18,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Clone the repository
         run: |
-          git clone https://github.com/mtararujs/python-greetings
+          git clone https://github.com/mtararujs/python-greetings python-greetings
 
       - name: Install dependencies
+        working-directory: python-greetings
         run: |
           echo "Installing required dependencies"
           py -m pip install --upgrade pip
@@ -51,6 +52,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run tests on Development environment
+        working-directory: python-greetings
         run: |
           echo "Running tests on Development"
           
@@ -63,6 +65,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to Staging environment
+        working-directory: python-greetings
         run: |
           echo "Deploying to Staging"
 
@@ -75,6 +78,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run tests on Staging environment
+        working-directory: python-greetings
         run: |
           echo "Running tests on Staging"
 
@@ -87,6 +91,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to Preprod environment
+        working-directory: python-greetings
         run: |
           echo "Deploying to Preprod"
 
@@ -99,6 +104,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run tests on Preprod environment
+        working-directory: python-greetings
         run: |
           echo "Running tests on Preprod"
 
@@ -111,6 +117,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to Prod environment
+        working-directory: python-greetings
         run: |
           echo "Deploying to Prod"
 
@@ -123,5 +130,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run tests on Prod environment
+        working-directory: python-greetings
         run: |
           echo "Running tests on Prod"
