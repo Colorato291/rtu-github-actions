@@ -20,11 +20,6 @@ jobs:
         run: |
           git clone https://github.com/mtararujs/python-greetings
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
       - name: Install dependencies
         working-directory: python-greetings
         run: |
