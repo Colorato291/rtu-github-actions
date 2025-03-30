@@ -1,0 +1,21 @@
+name: "Deploy app with PM2"
+description: "Deploys the app using PM2"
+inputs:
+  app-environment:
+    description: "App environment (staging, preprod, prod)"
+    required: true
+  port:
+    description: "Port number for the app"
+    required: true
+  working-directory:
+    description: "Directory of the app to deploy"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Deploy the app
+      shell: cmd
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        echo "Deploying the app"
+        pm2 start app.py --name greetings-app-${{ inputs.app-name }} -- --port ${{ inputs.port }}

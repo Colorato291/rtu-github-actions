@@ -1,0 +1,16 @@
+name: "Install Python Dependencies"
+description: "Installs Python dependencies using pip"
+inputs:
+  working-directory:
+    description: "Directory of requirements.txt"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Install dependencies
+      shell: cmd
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        echo "Installing required dependencies"
+        py -m pip install --upgrade pip
+        py -m pip install -r requirements.txt

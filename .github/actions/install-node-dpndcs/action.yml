@@ -1,0 +1,15 @@
+name: "Install node dependencies"
+description: "Installs node dependencies using npm"
+inputs:
+  working-directory:
+    description: "Directory of package.json"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Install dependencies
+      shell: cmd
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        echo "Installing required dependencies"
+        npm install

@@ -1,0 +1,14 @@
+name: "Clone the repository"
+description: "Clones the specified repository"
+inputs:
+  repo-url:
+    description: "The URL of the repository to clone"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Clone the repository
+      shell: cmd
+      run: |
+        echo "Cloning the repository..."
+        git clone ${{ inputs.repo-url }}

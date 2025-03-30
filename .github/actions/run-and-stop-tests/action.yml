@@ -1,0 +1,24 @@
+name: "Run and stop tests"
+description: "Runs and stops tests on the specified environment"
+inputs:
+  working-directory:
+    description: "Directory of the test repository"
+    required: true
+  app-environment:
+    description: "App environment (staging, preprod, prod)"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Run tests
+      shell: cmd
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        echo "Running tests on ${{ inputs.app-environment }} environment..."
+        npm run greetings greetings_${{ inputs.app-environment }}
+
+    - name: Stop the app
+      shell: cmd
+      run: |
+        echo "Stopping the app..."
+        pm2 delete greetings-app-${{ inputs.app-environment }} & set "errorlevel=0"

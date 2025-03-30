@@ -1,0 +1,220 @@
+name: Python greeting
+
+on:
+  push:
+    branches: 
+      - "main"
+
+permissions:
+  contents: read
+
+jobs:
+  install-pip-deps:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: cmd # As self-hosted machine is Windows, to bypass security restrictions for PS, cmd is used
+    steps:
+      - name: Clone the repository
+        run: |
+          git clone https://github.com/mtararujs/python-greetings
+
+      - name: List directory contents
+        run: dir python-greetings
+
+      - name: Install dependencies
+        working-directory: python-greetings
+        run: |
+          echo "Installing required dependencies"
+          py -m pip install --upgrade pip
+          py -m pip install -r requirements.txt
+
+  deploy-to-dev:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: cmd
+    needs: install-pip-deps
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clone the repository
+        run: |
+          git clone https://github.com/mtararujs/python-greetings
+
+      - name: Run tests on Dev environment
+        working-directory: python-greetings
+        run: |
+          echo "Deploying to Development"
+          pm2 start app.py --name greetings-app-dev -- --port 7001
+
+  tests-on-dev:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: cmd
+    needs: deploy-to-dev
+    steps:
+      - name: Clone the test repository
+        run: |
+          git clone https://github.com/mtararujs/course-js-api-framework
+
+      - name: Install dependencies
+        working-directory: course-js-api-framework
+        run: |
+          echo "Installing required dependencies"
+          npm install
+          
+      - name: Run tests on Development environment
+        working-directory: course-js-api-framework
+        run: |
+          echo "Running tests on Development"
+          npm run greetings greetings_dev
+
+      - name: Stop the app
+        run: |
+          echo "Stopping the app"
+          pm2 delete greetings-app-dev & set "errorlevel=0"
+
+  deploy-to-staging:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: cmd
+    needs: tests-on-dev
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clone the repository
+        run: |
+          git clone https://github.com/mtararujs/python-greetings
+
+      - name: Run tests on Dev environment
+        working-directory: python-greetings
+        run: |
+          echo "Deploying to Staging"
+          pm2 start app.py --name greetings-app-staging -- --port 7002
+
+  tests-on-staging:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: cmd
+    needs: deploy-to-staging
+    steps:
+      - name: Clone the test repository
+        run: |
+          git clone https://github.com/mtararujs/course-js-api-framework
+
+      - name: Install dependencies
+        working-directory: course-js-api-framework
+        run: |
+          echo "Installing required dependencies"
+          npm install
+
+      - name: Run tests on Staging environment
+        working-directory: course-js-api-framework
+        run: |
+          echo "Running tests on Staging"
+          npm run greetings greetings_stg
+          
+      - name: Stop the app
+        run: |
+          echo "Stopping the app"
+          pm2 delete greetings-app-staging & set "errorlevel=0"
+
+  deploy-to-preprod:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: cmd
+    needs: tests-on-staging
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clone the repository
+        run: |
+          git clone https://github.com/mtararujs/python-greetings
+
+      - name: Run tests on Preproduction environment
+        working-directory: python-greetings
+        run: |
+          echo "Deploying to Preproduction"
+
+          pm2 start app.py --name greetings-app-preprod -- --port 7003
+
+  tests-on-preprod:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: cmd
+    needs: deploy-to-preprod
+    steps:
+      - name: Clone the test repository
+        run: |
+          git clone https://github.com/mtararujs/course-js-api-framework
+
+      - name: Install dependencies
+        working-directory: course-js-api-framework
+        run: |
+          echo "Installing required dependencies"
+          npm install
+
+      - name: Run tests on Preproduction environment
+        working-directory: course-js-api-framework
+        run: |
+          echo "Running tests on Preproduction"
+          npm run greetings greetings_preprod
+          pm2 delete greetings-app-preprod & set "errorlevel=0"
+
+      - name: Stop the app
+        run: |
+          echo "Stopping the app"
+          pm2 delete greetings-app-preprod & set "errorlevel=0"
+
+  deploy-to-prod:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: cmd
+    needs: tests-on-preprod
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clone the repository
+        run: |
+          git clone https://github.com/mtararujs/python-greetings
+
+      - name: Run tests on Production environment
+        working-directory: python-greetings
+        run: |
+          echo "Deploying to Production"
+          pm2 start app.py --name greetings-app-prod -- --port 7004
+
+  tests-on-prod:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: cmd
+    needs: deploy-to-prod
+    steps:
+      - name: Clone the test repository
+        run: |
+          git clone https://github.com/mtararujs/course-js-api-framework
+
+      - name: Install dependencies
+        working-directory: course-js-api-framework
+        run: |
+          echo "Installing required dependencies"
+          npm install
+
+      - name: Run tests on Production environment
+        working-directory: course-js-api-framework
+        run: |
+          echo "Running tests on Production"
+          npm run greetings greetings_prod
+
+      - name: Stop the app
+        run: |
+          echo "Stopping the app"
+          pm2 delete greetings-app-prod & set "errorlevel=0"
