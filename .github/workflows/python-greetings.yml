@@ -38,8 +38,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: List directory contents
-        run: dir python-greetings
+      - name: Clone the repository
+        run: |
+          git clone https://github.com/mtararujs/python-greetings
 
       - name: Run tests on Dev environment
         working-directory: python-greetings
