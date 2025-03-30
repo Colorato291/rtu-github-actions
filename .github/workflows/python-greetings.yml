@@ -24,7 +24,7 @@ jobs:
         run: dir python-greetings
 
       - name: Install dependencies
-        working-directory: ${{ github.workspace }}\python-greetings
+        working-directory: python-greetings
         run: |
           echo "Installing required dependencies"
           py -m pip install --upgrade pip
@@ -55,7 +55,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run tests on Development environment
-        working-directory: ${{ github.workspace }}\python-greetings
+        working-directory: python-greetings
         run: |
           echo "Running tests on Development"
           
@@ -68,7 +68,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to Staging environment
-        working-directory: ${{ github.workspace }}\python-greetings
+        working-directory: python-greetings
         run: |
           echo "Deploying to Staging"
 
@@ -81,7 +81,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run tests on Staging environment
-        working-directory: ${{ github.workspace }}\python-greetings
+        working-directory: "${{ github.workspace }}\\python-greetings"
         run: |
           echo "Running tests on Staging"
 
@@ -94,7 +94,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to Preprod environment
-        working-directory: ${{ github.workspace }}\python-greetings
+        working-directory: python-greetings
         run: |
           echo "Deploying to Preprod"
 
@@ -107,7 +107,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run tests on Preprod environment
-        working-directory: ${{ github.workspace }}\python-greetings
+        working-directory: python-greetings
         run: |
           echo "Running tests on Preprod"
 
@@ -120,7 +120,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to Prod environment
-        working-directory: ${{ github.workspace }}\python-greetings
+        working-directory: python-greetings
         run: |
           echo "Deploying to Prod"
 
@@ -133,6 +133,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run tests on Prod environment
-        working-directory: ${{ github.workspace }}\python-greetings
+        working-directory: python-greetings
         run: |
           echo "Running tests on Prod"
