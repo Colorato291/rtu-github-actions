@@ -15,6 +15,7 @@ jobs:
       run:
         shell: cmd # As self-hosted machine is Windows, to bypass security restrictions for PS, cmd is used
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/clone-repo
         with:
           repo-url: https://github.com/mtararujs/python-greetings
