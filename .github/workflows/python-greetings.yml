@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   install-pip-deps:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
       - name: Clone the repository
@@ -36,7 +36,7 @@ jobs:
           path: python-greetings
 
   deploy-to-dev:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: install-pip-deps
     steps:
       - name: Checkout main repository
@@ -54,7 +54,7 @@ jobs:
           pm2 start app.py --name greetings-app-dev --port 7001
 
   tests-on-dev:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: deploy-to-dev
     steps:
       - uses: actions/checkout@v4
@@ -64,7 +64,7 @@ jobs:
           echo "Running tests on Development"
           
   deploy-to-staging:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: tests-on-dev
     steps:
       - uses: actions/checkout@v4
@@ -74,7 +74,7 @@ jobs:
           echo "Deploying to Staging"
 
   tests-on-staging:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: deploy-to-staging
     steps:
       - uses: actions/checkout@v4
@@ -84,7 +84,7 @@ jobs:
           echo "Running tests on Staging"
 
   deploy-to-preprod:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: tests-on-staging
     steps:
       - uses: actions/checkout@v4
@@ -94,7 +94,7 @@ jobs:
           echo "Deploying to Preprod"
 
   tests-on-preprod:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: deploy-to-preprod
     steps:
       - uses: actions/checkout@v4
@@ -104,7 +104,7 @@ jobs:
           echo "Running tests on Preprod"
 
   deploy-to-prod:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: tests-on-preprod
     steps:
       - uses: actions/checkout@v4
@@ -114,7 +114,7 @@ jobs:
           echo "Deploying to Prod"
 
   tests-on-prod:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: deploy-to-prod
     steps:
       - uses: actions/checkout@v4
