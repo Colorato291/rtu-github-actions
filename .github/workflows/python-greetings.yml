@@ -25,6 +25,7 @@ jobs:
       - name: Install dependencies
         run: |
           echo "Installing required dependencies"
+          cd python-greetings
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
