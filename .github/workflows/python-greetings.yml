@@ -70,6 +70,7 @@ jobs:
         run: |
           echo "Running tests on Development"
           npm run greetings greetings_dev
+          pm2 delete greetings-app-dev & set "errorlevel=0"
           
   deploy-to-staging:
     runs-on: self-hosted
@@ -88,7 +89,6 @@ jobs:
         working-directory: python-greetings
         run: |
           echo "Deploying to Staging"
-          pm2 delete greetings-app-dev & set "errorlevel=0"
           pm2 start app.py --name greetings-app-staging -- --port 7002
 
   tests-on-staging:
@@ -113,6 +113,7 @@ jobs:
         run: |
           echo "Running tests on Staging"
           npm run greetings greetings_staging
+          pm2 delete greetings-app-staging & set "errorlevel=0"
 
   deploy-to-preprod:
     runs-on: self-hosted
@@ -131,7 +132,7 @@ jobs:
         working-directory: python-greetings
         run: |
           echo "Deploying to Preproduction"
-          pm2 delete greetings-app-staging & set "errorlevel=0"
+
           pm2 start app.py --name greetings-app-preprod -- --port 7003
 
   tests-on-preprod:
@@ -156,6 +157,7 @@ jobs:
         run: |
           echo "Running tests on Preproduction"
           npm run greetings greetings_preprod
+          pm2 delete greetings-app-preprod & set "errorlevel=0"
 
   deploy-to-prod:
     runs-on: self-hosted
@@ -174,7 +176,6 @@ jobs:
         working-directory: python-greetings
         run: |
           echo "Deploying to Production"
-          pm2 delete greetings-app-preprod & set "errorlevel=0"
           pm2 start app.py --name greetings-app-prod -- --port 7004
 
   tests-on-prod:
