@@ -70,8 +70,12 @@ jobs:
         run: |
           echo "Running tests on Development"
           npm run greetings greetings_dev
+
+      - name: Stop the app
+        run: |
+          echo "Stopping the app"
           pm2 delete greetings-app-dev & set "errorlevel=0"
-          
+
   deploy-to-staging:
     runs-on: self-hosted
     defaults:
@@ -113,8 +117,11 @@ jobs:
         run: |
           echo "Running tests on Staging"
           npm run greetings greetings_staging
+          
+      - name: Stop the app
+        run: |
+          echo "Stopping the app"
           pm2 delete greetings-app-staging & set "errorlevel=0"
-
   deploy-to-preprod:
     runs-on: self-hosted
     defaults:
@@ -159,6 +166,11 @@ jobs:
           npm run greetings greetings_preprod
           pm2 delete greetings-app-preprod & set "errorlevel=0"
 
+      - name: Stop the app
+        run: |
+          echo "Stopping the app"
+          pm2 delete greetings-app-preprod & set "errorlevel=0"
+
   deploy-to-prod:
     runs-on: self-hosted
     defaults:
@@ -200,3 +212,8 @@ jobs:
         run: |
           echo "Running tests on Production"
           npm run greetings greetings_prod
+
+      - name: Stop the app
+        run: |
+          echo "Stopping the app"
+          pm2 delete greetings-app-prod & set "errorlevel=0"
