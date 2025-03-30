@@ -116,12 +116,13 @@ jobs:
         working-directory: course-js-api-framework
         run: |
           echo "Running tests on Staging"
-          npm run greetings greetings_staging
+          npm run greetings greetings_stg
           
       - name: Stop the app
         run: |
           echo "Stopping the app"
           pm2 delete greetings-app-staging & set "errorlevel=0"
+
   deploy-to-preprod:
     runs-on: self-hosted
     defaults:
