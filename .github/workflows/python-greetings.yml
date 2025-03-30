@@ -39,9 +39,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: install-pip-deps
     steps:
-      - uses: actions/checkout@v4
-      - name: Deploy to Development environment
-        working-directory: python-greetings
+      - name: Checkout main repository
+        uses: actions/checkout@v4
+
+      - name: Download the python-greetings repository artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: python-greetings
+
+      - name: Run tests on Dev environment
         run: |
           echo "Deploying to Development"
           pm2 delete greetings-app-dev & set "errorlevel=0"
