@@ -12,7 +12,7 @@ jobs:
   install-pip-deps:
     runs-on: ubuntu-latest
     steps:
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: install-pip-deps
     steps:
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Deploy to Development environment
         run: |
           echo "Deploying to Development"
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy-to-dev
     steps:
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Run tests on Development environment
         run: |
           echo "Running tests on Development"
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: tests-on-dev
     steps:
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Deploy to Staging environment
         run: |
           echo "Deploying to Staging"
@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy-to-staging
     steps:
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Run tests on Staging environment
         run: |
           echo "Running tests on Staging"
@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: tests-on-staging
     steps:
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Deploy to Preprod environment
         run: |
           echo "Deploying to Preprod"
@@ -72,7 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy-to-preprod
     steps:
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Run tests on Preprod environment
         run: |
           echo "Running tests on Preprod"
@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: tests-on-preprod
     steps:
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Deploy to Prod environment
         run: |
           echo "Deploying to Prod"
@@ -90,7 +90,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy-to-prod
     steps:
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Run tests on Prod environment
         run: |
           echo "Running tests on Prod"
