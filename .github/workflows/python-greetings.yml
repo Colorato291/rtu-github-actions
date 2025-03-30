@@ -16,7 +16,7 @@ jobs:
       - name: Clone the repository
         run: |
           git clone https://github.com/mtararujs/python-greetings
-          
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -30,7 +30,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Upload the cloned repository as an artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: python-greetings
           path: python-greetings
