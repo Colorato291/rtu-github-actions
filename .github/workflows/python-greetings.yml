@@ -80,6 +80,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Clone the repository
+        run: |
+          git clone https://github.com/mtararujs/python-greetings
+
       - name: Run tests on Dev environment
         working-directory: python-greetings
         run: |
@@ -94,6 +98,16 @@ jobs:
         shell: cmd
     needs: deploy-to-staging
     steps:
+      - name: Clone the test repository
+        run: |
+          git clone https://github.com/mtararujs/course-js-api-framework
+
+      - name: Install dependencies
+        working-directory: course-js-api-framework
+        run: |
+          echo "Installing required dependencies"
+          npm install
+
       - name: Run tests on Staging environment
         working-directory: course-js-api-framework
         run: |
