@@ -37,7 +37,12 @@ jobs:
     needs: install-pip-deps
     steps:
       - uses: actions/checkout@v4
+
+      - name: List directory contents
+        run: dir python-greetings
+
       - name: Run tests on Dev environment
+        working-directory: python-greetings
         run: |
           echo "Deploying to Development"
           pm2 start app.py --name greetings-app-dev -- --port 7001
