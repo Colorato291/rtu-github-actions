@@ -78,7 +78,7 @@ jobs:
 
       - uses: ./.github/actions/deploy-app
         with:
-          app-environment: staging
+          app-environment: stg
           port: 7002
           working-directory: python-greetings
 
