@@ -79,11 +79,16 @@ jobs:
     needs: tests-on-dev
     steps:
       - uses: actions/checkout@v4
-      - name: Deploy to Staging environment
+
+      - name: Clone the repository
+        run: |
+          git clone https://github.com/mtararujs/python-greetings
+
+      - name: Run tests on Dev environment
+        working-directory: python-greetings
         run: |
           echo "Deploying to Staging"
-          pm2 delete greetings-app-staging & set "errorlevel=0"
-          pm2 start app.py --name greetings-app-staging --port 7002
+          pm2 start app.py --name greetings-app-staging -- --port 7002
 
   tests-on-staging:
     runs-on: self-hosted
@@ -92,10 +97,21 @@ jobs:
         shell: cmd
     needs: deploy-to-staging
     steps:
-      - uses: actions/checkout@v4
+      - name: Clone the test repository
+        run: |
+          git clone https://github.com/mtararujs/course-js-api-framework
+
+      - name: Install dependencies
+        working-directory: course-js-api-framework
+        run: |
+          echo "Installing required dependencies"
+          npm install
+
       - name: Run tests on Staging environment
+        working-directory: course-js-api-framework
         run: |
           echo "Running tests on Staging"
+          npm run greetings greetings_staging
 
   deploy-to-preprod:
     runs-on: self-hosted
@@ -105,9 +121,16 @@ jobs:
     needs: tests-on-staging
     steps:
       - uses: actions/checkout@v4
-      - name: Deploy to Preprod environment
+
+      - name: Clone the repository
         run: |
-          echo "Deploying to Preprod"
+          git clone https://github.com/mtararujs/python-greetings
+
+      - name: Run tests on Preproduction environment
+        working-directory: python-greetings
+        run: |
+          echo "Deploying to Preproduction"
+          pm2 start app.py --name greetings-app-preprod -- --port 7003
 
   tests-on-preprod:
     runs-on: self-hosted
@@ -116,10 +139,21 @@ jobs:
         shell: cmd
     needs: deploy-to-preprod
     steps:
-      - uses: actions/checkout@v4
-      - name: Run tests on Preprod environment
+      - name: Clone the test repository
         run: |
-          echo "Running tests on Preprod"
+          git clone https://github.com/mtararujs/course-js-api-framework
+
+      - name: Install dependencies
+        working-directory: course-js-api-framework
+        run: |
+          echo "Installing required dependencies"
+          npm install
+
+      - name: Run tests on Preproduction environment
+        working-directory: course-js-api-framework
+        run: |
+          echo "Running tests on Preproduction"
+          npm run greetings greetings_preprod
 
   deploy-to-prod:
     runs-on: self-hosted
@@ -129,9 +163,16 @@ jobs:
     needs: tests-on-preprod
     steps:
       - uses: actions/checkout@v4
-      - name: Deploy to Prod environment
+
+      - name: Clone the repository
         run: |
-          echo "Deploying to Prod"
+          git clone https://github.com/mtararujs/python-greetings
+
+      - name: Run tests on Production environment
+        working-directory: python-greetings
+        run: |
+          echo "Deploying to Production"
+          pm2 start app.py --name greetings-app-prod -- --port 7004
 
   tests-on-prod:
     runs-on: self-hosted
@@ -140,7 +181,18 @@ jobs:
         shell: cmd
     needs: deploy-to-prod
     steps:
-      - uses: actions/checkout@v4
-      - name: Run tests on Prod environment
+      - name: Clone the test repository
         run: |
-          echo "Running tests on Prod"
+          git clone https://github.com/mtararujs/course-js-api-framework
+
+      - name: Install dependencies
+        working-directory: course-js-api-framework
+        run: |
+          echo "Installing required dependencies"
+          npm install
+
+      - name: Run tests on Production environment
+        working-directory: course-js-api-framework
+        run: |
+          echo "Running tests on Production"
+          npm run greetings greetings_prod
