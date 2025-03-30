@@ -24,8 +24,8 @@ jobs:
         working-directory: python-greetings
         run: |
           echo "Installing required dependencies"
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          py -m pip install --upgrade pip
+          py -m pip install -r requirements.txt
 
   deploy-to-dev:
     runs-on: self-hosted
