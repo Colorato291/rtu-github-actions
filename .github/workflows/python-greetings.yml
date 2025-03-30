@@ -15,11 +15,11 @@ jobs:
       run:
         shell: cmd # As self-hosted machine is Windows, to bypass security restrictions for PS, cmd is used
     steps:
-      - uses: /.github/actions/clone-repo
+      - uses: ./.github/actions/clone-repo
         with:
           repo-url: https://github.com/mtararujs/python-greetings
 
-      - uses: /.github/actions/install-py-dpndcs
+      - uses: ./.github/actions/install-py-dpndcs
         with:
           working-directory: python-greetings
 
@@ -32,11 +32,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: /.github/actions/clone-repo
+      - uses: ./.github/actions/clone-repo
         with:
           repo-url: https://github.com/mtararujs/python-greetings
 
-      - uses: /.github/actions/deploy-app
+      - uses: ./.github/actions/deploy-app
         with:
           app-environment: dev
           port: 7001
@@ -49,15 +49,15 @@ jobs:
         shell: cmd
     needs: deploy-to-dev
     steps:
-      - uses: /.github/actions/clone-repo
+      - uses: ./.github/actions/clone-repo
         with:
           repo-url: https://github.com/mtararujs/course-js-api-framework
 
-      - uses: /.github/actions/install-node-dpndcs
+      - uses: ./.github/actions/install-node-dpndcs
         with:
           working-directory: course-js-api-framework
 
-      - uses: /.github/actions/run-and-stop-tests
+      - uses: ./.github/actions/run-and-stop-tests
         with:
           working-directory: course-js-api-framework
           app-environment: dev
@@ -71,11 +71,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: /.github/actions/clone-repo
+      - uses: ./.github/actions/clone-repo
         with:
           repo-url: https://github.com/mtararujs/python-greetings
 
-      - uses: /.github/actions/deploy-app
+      - uses: ./.github/actions/deploy-app
         with:
           app-environment: staging
           port: 7002
@@ -88,15 +88,15 @@ jobs:
         shell: cmd
     needs: deploy-to-staging
     steps:
-      - uses: /.github/actions/clone-repo
+      - uses: ./.github/actions/clone-repo
         with:
           repo-url: https://github.com/mtararujs/course-js-api-framework
 
-      - uses: /.github/actions/install-node-dpndcs
+      - uses: ./.github/actions/install-node-dpndcs
         with:
           working-directory: course-js-api-framework
 
-      - uses: /.github/actions/run-and-stop-tests
+      - uses: ./.github/actions/run-and-stop-tests
         with:
           working-directory: course-js-api-framework
           app-environment: staging
@@ -110,11 +110,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: /.github/actions/clone-repo
+      - uses: ./.github/actions/clone-repo
         with:
           repo-url: https://github.com/mtararujs/python-greetings
 
-      - uses: /.github/actions/deploy-app
+      - uses: ./.github/actions/deploy-app
         with:
           app-environment: preprod
           port: 7003
@@ -127,15 +127,15 @@ jobs:
         shell: cmd
     needs: deploy-to-preprod
     steps:
-      - uses: /.github/actions/clone-repo
+      - uses: ./.github/actions/clone-repo
         with:
           repo-url: https://github.com/mtararujs/course-js-api-framework
 
-      - uses: /.github/actions/install-node-dpndcs
+      - uses: ./.github/actions/install-node-dpndcs
         with:
           working-directory: course-js-api-framework
 
-      - uses: /.github/actions/run-and-stop-tests
+      - uses: ./.github/actions/run-and-stop-tests
         with:
           working-directory: course-js-api-framework
           app-environment: preprod
@@ -149,11 +149,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: /.github/actions/clone-repo
+      - uses: ./.github/actions/clone-repo
         with:
           repo-url: https://github.com/mtararujs/python-greetings
 
-      - uses: /.github/actions/deploy-app
+      - uses: ./.github/actions/deploy-app
         with:
           app-environment: prod
           port: 7004
@@ -166,15 +166,15 @@ jobs:
         shell: cmd
     needs: deploy-to-prod
     steps:
-      - uses: /.github/actions/clone-repo
+      - uses: ./.github/actions/clone-repo
         with:
           repo-url: https://github.com/mtararujs/course-js-api-framework
 
-      - uses: /.github/actions/install-node-dpndcs
+      - uses: ./.github/actions/install-node-dpndcs
         with:
           working-directory: course-js-api-framework
 
-      - uses: /.github/actions/run-and-stop-tests
+      - uses: ./.github/actions/run-and-stop-tests
         with:
           working-directory: course-js-api-framework
           app-environment: prod
