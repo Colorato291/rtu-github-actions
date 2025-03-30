@@ -1,0 +1,95 @@
+name: Python greeting
+
+on:
+  push:
+    branches: "main"
+
+permissions:
+  contents: read
+
+jobs:
+  install-pip-deps:
+    runs-on: ubuntu-latest
+    steps:
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          echo "Installing required dependencies"
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+  deploy-to-dev:
+    runs-on: ubuntu-latest
+    needs: install-pip-deps
+    steps:
+        uses: actions/checkout@v4
+      - name: Deploy to Development environment
+        run: |
+          echo "Deploying to Development"
+
+  tests-on-dev:
+    runs-on: ubuntu-latest
+    needs: deploy-to-dev
+    steps:
+        uses: actions/checkout@v4
+      - name: Run tests on Development environment
+        run: |
+          echo "Running tests on Development"
+          
+  deploy-to-staging:
+    runs-on: ubuntu-latest
+    needs: tests-on-dev
+    steps:
+        uses: actions/checkout@v4
+      - name: Deploy to Staging environment
+        run: |
+          echo "Deploying to Staging"
+
+  tests-on-staging:
+    runs-on: ubuntu-latest
+    needs: deploy-to-staging
+    steps:
+        uses: actions/checkout@v4
+      - name: Run tests on Staging environment
+        run: |
+          echo "Running tests on Staging"
+
+  deploy-to-preprod:
+    runs-on: ubuntu-latest
+    needs: tests-on-staging
+    steps:
+        uses: actions/checkout@v4
+      - name: Deploy to Preprod environment
+        run: |
+          echo "Deploying to Preprod"
+
+  tests-on-preprod:
+    runs-on: ubuntu-latest
+    needs: deploy-to-preprod
+    steps:
+        uses: actions/checkout@v4
+      - name: Run tests on Preprod environment
+        run: |
+          echo "Running tests on Preprod"
+
+  deploy-to-prod:
+    runs-on: ubuntu-latest
+    needs: tests-on-preprod
+    steps:
+        uses: actions/checkout@v4
+      - name: Deploy to Prod environment
+        run: |
+          echo "Deploying to Prod"
+
+  tests-on-prod:
+    runs-on: ubuntu-latest
+    needs: deploy-to-prod
+    steps:
+        uses: actions/checkout@v4
+      - name: Run tests on Prod environment
+        run: |
+          echo "Running tests on Prod"
