@@ -18,4 +18,4 @@ runs:
       working-directory: ${{ inputs.working-directory }}
       run: |
         echo "Deploying the app"
-        pm2 start app.py --name greetings-app-${{ inputs.app-name }} -- --port ${{ inputs.port }}
+        pm2 start app.py --name greetings-app-${{ inputs.app-environment }} -- --port ${{ inputs.port }}
