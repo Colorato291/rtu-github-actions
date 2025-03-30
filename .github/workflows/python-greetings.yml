@@ -61,9 +61,10 @@ jobs:
           npm install
 
       - name: Run tests on Development environment
+        working-directory: course-js-api-framework
         run: |
           echo "Running tests on Development"
-          npm run greetings_dev
+          npm run greetings greetings_dev
           
   deploy-to-staging:
     runs-on: self-hosted
