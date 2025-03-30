@@ -47,6 +47,7 @@ jobs:
         run: |
           echo "Deploying to Development"
           pm2 start app.py --name greetings-app-dev -- --port 7001
+          pm2 save
 
   tests-on-dev:
     runs-on: self-hosted
@@ -88,7 +89,9 @@ jobs:
         working-directory: python-greetings
         run: |
           echo "Deploying to Staging"
+          pm2 delete greetings-app-dev & set "errorlevel=0"
           pm2 start app.py --name greetings-app-staging -- --port 7002
+          pm2 save
 
   tests-on-staging:
     runs-on: self-hosted
@@ -130,7 +133,9 @@ jobs:
         working-directory: python-greetings
         run: |
           echo "Deploying to Preproduction"
+          pm2 delete greetings-app-staging & set "errorlevel=0"
           pm2 start app.py --name greetings-app-preprod -- --port 7003
+          pm2 save
 
   tests-on-preprod:
     runs-on: self-hosted
@@ -172,7 +177,9 @@ jobs:
         working-directory: python-greetings
         run: |
           echo "Deploying to Production"
+          pm2 delete greetings-app-preprod & set "errorlevel=0"
           pm2 start app.py --name greetings-app-prod -- --port 7004
+          pm2 save
 
   tests-on-prod:
     runs-on: self-hosted
