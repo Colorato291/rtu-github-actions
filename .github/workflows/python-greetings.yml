@@ -46,7 +46,7 @@ jobs:
         working-directory: python-greetings
         run: |
           echo "Deploying to Development"
-          pm2 start app.py --name greetings-app-dev -- --port 7001
+          pm2 start app.py --name greetings-app-dev --interpreter python -- --port 7001
           pm2 save
 
   tests-on-dev:
