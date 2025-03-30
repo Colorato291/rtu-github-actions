@@ -46,8 +46,9 @@ jobs:
         working-directory: python-greetings
         run: |
           echo "Deploying to Development"
-          pm2 start app.py --name greetings-app-dev -- --port 7001
+          pm2 start app.py --name greetings-app-dev --interpreter python --watch false --time --max-memory-restart 300M -- --port 7001
           pm2 save
+          timeout /t 5
 
   tests-on-dev:
     runs-on: self-hosted
