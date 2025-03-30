@@ -20,6 +20,9 @@ jobs:
         run: |
           git clone https://github.com/mtararujs/python-greetings python-greetings
 
+      - name: List directory contents
+        run: dir
+
       - name: Install dependencies
         working-directory: ${{ github.workspace }}\python-greetings
         run: |
