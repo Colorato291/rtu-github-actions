@@ -100,7 +100,7 @@ jobs:
       - uses: ./.github/actions/run-and-stop-tests
         with:
           working-directory: course-js-api-framework
-          app-environment: staging
+          app-environment: stg
 
   deploy-to-preprod:
     runs-on: self-hosted
