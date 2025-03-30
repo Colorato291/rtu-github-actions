@@ -14,6 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Clone the repository
+        shell: cmd
         run: |
           git clone https://github.com/mtararujs/python-greetings
 
@@ -29,23 +30,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Upload the cloned repository as an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: python-greetings
-          path: python-greetings
-
   deploy-to-dev:
     runs-on: self-hosted
     needs: install-pip-deps
     steps:
       - name: Checkout main repository
         uses: actions/checkout@v4
-
-      - name: Download the python-greetings repository artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: python-greetings
 
       - name: Run tests on Dev environment
         run: |
